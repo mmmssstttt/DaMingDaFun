@@ -5,34 +5,43 @@
     "subtitle": "設計工作室",
     "tagline": "為想法建立可被看見、使用與記住的形式。",
     "services": "產品設計、平面設計、品牌建立、互動設計",
+    "email": "0800guava@gmail.com",
     "location": "KAOHSIUNG / TAIWAN",
     "coordinates": "TW / 22.63°N",
     "year": "2026",
-    "email": "0800guava@gmail.com",
     "copyright": "© 2026 / TAIWAN"
   },
   "nav": [
-    { "href": "#people", "label": "成員 PEOPLE" },
-    { "href": "#projects", "label": "作品 WORK" },
-    { "href": "#contact", "label": "聯絡 CONTACT" }
+    {
+      "href": "#people",
+      "label": "成員 PEOPLE"
+    },
+    {
+      "href": "#projects",
+      "label": "作品 WORK"
+    },
+    {
+      "href": "#contact",
+      "label": "聯絡 CONTACT"
+    }
   ],
   "people": [
     {
       "name": "江明倢 Sho",
       "role": "商業接洽　概念設計",
-      "image": "https://images.unsplash.com/photo-1761554169693-08fd975a94f8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=1000",
+      "image": "/DaMingDaFun/images/S__58228797.jpg",
       "position": "md:col-span-4 md:col-start-2 md:mt-28"
     },
     {
       "name": "陳子璇 Eleanor",
       "role": "專案管理　邏輯分析",
-      "image": "https://images.unsplash.com/photo-1771072427776-9142b2d39a26?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=1000",
+      "image": "/DaMingDaFun/images/S__58458130.jpg",
       "position": "md:col-span-3 md:col-start-7"
     },
     {
       "name": "蔡孟軒 Alvin",
       "role": "工程實作　產品打樣",
-      "image": "https://images.unsplash.com/photo-1761554169700-131bc3f188c3?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=1000",
+      "image": "/DaMingDaFun/images/messageImage_1784444420109.jpg",
       "position": "md:col-span-4 md:col-start-10 md:mt-44"
     }
   ],
@@ -83,7 +92,13 @@
     }
   ],
   "collaborators": [
-    { "name": "Sultani Coffee", "font": "serif" },
-    { "name": "Meow Party Café", "font": "grotesk" }
+    {
+      "name": "Sultani Coffee",
+      "font": "serif"
+    },
+    {
+      "name": "Meow Party Café",
+      "font": "grotesk"
+    }
   ]
 }

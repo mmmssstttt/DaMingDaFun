@@ -1,0 +1,64 @@
+backend:
+  name: github
+  repo: mmmssstttt/DaMingDaFun
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/DaMingDaFun/images"
+
+collections:
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "content"
+        label: "All Content"
+        file: "src/data/content.json"
+        format: "json"
+        fields:
+          - label: "Site"
+            name: "site"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Title (EN)", name: "titleEn", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - { label: "Tagline", name: "tagline", widget: "string" }
+              - { label: "Services", name: "services", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Coordinates", name: "coordinates", widget: "string" }
+              - { label: "Year", name: "year", widget: "string" }
+              - { label: "Copyright", name: "copyright", widget: "string" }
+          - label: "Navigation"
+            name: "nav"
+            widget: "list"
+            fields:
+              - { label: "Href", name: "href", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+          - label: "Team Members"
+            name: "people"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Photo", name: "image", widget: "image" }
+              - { label: "Grid Position", name: "position", widget: "string" }
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Type", name: "type", widget: "string" }
+              - { label: "Date", name: "date", widget: "string" }
+              - { label: "Visual Style", name: "visual", widget: "select", options: ["map", "score", "machine", "vr"] }
+              - { label: "Grid Position", name: "position", widget: "string" }
+              - { label: "Short Description", name: "description", widget: "text", required: false }
+              - { label: "Body Content", name: "body", widget: "markdown", required: false }
+              - { label: "Gallery", name: "gallery", widget: "list", required: false, field: { label: "Image", name: "image", widget: "image" } }
+          - label: "Collaborators"
+            name: "collaborators"
+            widget: "list"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Font Style", name: "font", widget: "select", options: ["serif", "grotesk"] }

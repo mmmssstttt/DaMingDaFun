@@ -17,6 +17,7 @@ function figmaAssetResolver() {
 }
 
 export default defineConfig({
+  base: '/DaMingDaFun/',
   plugins: [
     figmaAssetResolver(),
     vue({

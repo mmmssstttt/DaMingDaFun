@@ -2,8 +2,6 @@ backend:
   name: github
   repo: mmmssstttt/DaMingDaFun
   branch: main
-  app_id: Ov23lidQGxGlfTHtEpKi
-  auth_type: pkce
 
 media_folder: "public/images"
 public_folder: "/DaMingDaFun/images"

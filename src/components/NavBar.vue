@@ -18,17 +18,22 @@ function closeMenu() {
   <header class="relative flex h-16 items-center justify-between border-b border-border px-4 sm:px-6 md:px-8">
     <router-link to="/" class="font-mono text-[11px] tracking-[.12em]">DMDF®</router-link>
     <nav class="hidden gap-7 font-mono text-[10px] tracking-[.12em] md:flex">
-      <component
-        :is="link.href.startsWith('http') ? 'a' : 'router-link'"
-        v-for="link in content.nav"
-        :key="link.href"
-        :href="link.href.startsWith('http') ? link.href : undefined"
-        :to="!link.href.startsWith('http') ? (link.href.startsWith('#') ? { path: '/', hash: link.href } : link.href) : undefined"
-        :target="link.href.startsWith('http') ? '_blank' : undefined"
-        :rel="link.href.startsWith('http') ? 'noopener noreferrer' : undefined"
-      >
-        {{ link.label }}
-      </component>
+      <template v-for="link in content.nav" :key="link.href">
+        <a
+          v-if="link.href.startsWith('http')"
+          :href="link.href"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ link.label }}
+        </a>
+        <router-link
+          v-else
+          :to="link.href.startsWith('#') ? { path: '/', hash: link.href } : link.href"
+        >
+          {{ link.label }}
+        </router-link>
+      </template>
     </nav>
     <button
       class="grid size-8 place-items-center border border-border md:hidden"
@@ -42,19 +47,26 @@ function closeMenu() {
       v-if="menuOpen"
       class="absolute left-0 top-full z-20 flex w-full flex-col border-b border-border bg-background px-4 py-3 font-mono text-xs tracking-[.1em] shadow-[0_12px_0_rgba(32,32,29,.12)] md:hidden"
     >
-      <component
-        :is="link.href.startsWith('http') ? 'a' : 'router-link'"
-        v-for="link in content.nav"
-        :key="link.href"
-        :href="link.href.startsWith('http') ? link.href : undefined"
-        :to="!link.href.startsWith('http') ? (link.href.startsWith('#') ? { path: '/', hash: link.href } : link.href) : undefined"
-        :target="link.href.startsWith('http') ? '_blank' : undefined"
-        :rel="link.href.startsWith('http') ? 'noopener noreferrer' : undefined"
-        class="border-t border-border py-3"
-        @click="closeMenu"
-      >
-        {{ link.label }}
-      </component>
+      <template v-for="link in content.nav" :key="link.href">
+        <a
+          v-if="link.href.startsWith('http')"
+          :href="link.href"
+          class="border-t border-border py-3"
+          target="_blank"
+          rel="noopener noreferrer"
+          @click="closeMenu"
+        >
+          {{ link.label }}
+        </a>
+        <router-link
+          v-else
+          :to="link.href.startsWith('#') ? { path: '/', hash: link.href } : link.href"
+          class="border-t border-border py-3"
+          @click="closeMenu"
+        >
+          {{ link.label }}
+        </router-link>
+      </template>
     </nav>
   </header>
 </template>

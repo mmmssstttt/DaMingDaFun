@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ArrowLeft } from 'lucide-vue-next'
+import { marked } from 'marked'
 import Label from '@/components/Label.vue'
 import ProjectVisual from '@/components/ProjectVisual.vue'
 import StatusBar from '@/components/StatusBar.vue'
@@ -15,6 +16,13 @@ const props = defineProps<{
 const project = computed(() =>
   content.projects.find((p) => p.id === props.id)
 )
+
+const parsedBody = computed(() => {
+  if (project.value && project.value.body) {
+    return marked.parse(project.value.body) as string
+  }
+  return ''
+})
 </script>
 
 <template>
@@ -52,7 +60,7 @@ const project = computed(() =>
         </p>
       </div>
 
-      <div v-if="project.body" class="mt-10 max-w-2xl" v-html="project.body" />
+      <div v-if="project.body" class="markdown-content mt-10 max-w-2xl font-mono text-sm leading-relaxed text-muted-foreground" v-html="parsedBody" />
 
       <div v-if="project.gallery && project.gallery.length" class="mt-10">
         <Label>GALLERY</Label>
@@ -81,3 +89,49 @@ const project = computed(() =>
     <FooterSection />
   </div>
 </template>
+
+<style scoped>
+:deep(.markdown-content h1),
+:deep(.markdown-content h2),
+:deep(.markdown-content h3) {
+  color: var(--foreground);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+:deep(.markdown-content p) {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+:deep(.markdown-content a) {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+:deep(.markdown-content a:hover) {
+  color: var(--foreground);
+}
+:deep(.markdown-content strong) {
+  font-weight: 700;
+  color: var(--foreground);
+}
+:deep(.markdown-content img) {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+}
+:deep(.markdown-content ul) {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+:deep(.markdown-content ol) {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+</style>

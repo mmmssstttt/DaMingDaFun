@@ -13,9 +13,9 @@
 // 陳子璇 Eleanor
 // 蔡孟軒 Alvin
 const _peopleSafelist = [
-  'md:col-span-4', 'md:col-start-2', 'md:mt-28',
-  'md:col-span-3', 'md:col-start-7',
-  'md:col-span-4', 'md:col-start-10', 'md:mt-44',
+  'md:col-span-4', 'md:col-start-1', 'md:mt-28',
+  'md:col-span-4', 'md:col-start-5',
+  'md:col-span-4', 'md:col-start-9', 'md:mt-44',
 ]
 
 // Projects grid positions

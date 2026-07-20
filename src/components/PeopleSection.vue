@@ -16,7 +16,7 @@ const activeDot = ref(0)
       </div>
       <span class="font-mono text-[10px]">01—0{{ content.people.length }}</span>
     </div>
-    <div class="grid grid-cols-1 gap-12 px-4 sm:px-6 md:grid-cols-13 md:gap-x-4 md:gap-y-0 md:px-8">
+    <div class="grid grid-cols-1 gap-12 px-4 sm:px-6 md:grid-cols-12 md:gap-x-4 md:gap-y-0 md:px-8">
       <article
         v-for="(person, i) in content.people"
         :key="person.name"

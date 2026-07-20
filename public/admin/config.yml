@@ -39,7 +39,7 @@ collections:
             name: "nav"
             widget: "list"
             fields:
-              - { label: "Href", name: "href", widget: "string" }
+              - { label: "Link (URL or #anchor)", name: "href", widget: "string", hint: "Enter an anchor (e.g. #people) or a full URL (e.g. https://google.com)." }
               - { label: "Label", name: "label", widget: "string" }
           - label: "Team Members"
             name: "people"

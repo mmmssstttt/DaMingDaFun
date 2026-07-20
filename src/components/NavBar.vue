@@ -18,7 +18,13 @@ function closeMenu() {
   <header class="relative flex h-16 items-center justify-between border-b border-border px-4 sm:px-6 md:px-8">
     <router-link to="/" class="font-mono text-[11px] tracking-[.12em]">DMDF®</router-link>
     <nav class="hidden gap-7 font-mono text-[10px] tracking-[.12em] md:flex">
-      <a v-for="link in content.nav" :key="link.href" :href="link.href">{{ link.label }}</a>
+      <a
+        v-for="link in content.nav"
+        :key="link.href"
+        :href="link.href"
+        :target="link.href.startsWith('http') ? '_blank' : undefined"
+        :rel="link.href.startsWith('http') ? 'noopener noreferrer' : undefined"
+      >{{ link.label }}</a>
     </nav>
     <button
       class="grid size-8 place-items-center border border-border md:hidden"
@@ -37,6 +43,8 @@ function closeMenu() {
         :key="link.href"
         :href="link.href"
         class="border-t border-border py-3"
+        :target="link.href.startsWith('http') ? '_blank' : undefined"
+        :rel="link.href.startsWith('http') ? 'noopener noreferrer' : undefined"
         @click="closeMenu"
       >
         {{ link.label }}

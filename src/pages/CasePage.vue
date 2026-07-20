@@ -23,6 +23,20 @@ const parsedBody = computed(() => {
   }
   return ''
 })
+
+function handleBodyClick(event: MouseEvent) {
+  const target = event.target as HTMLElement
+  const anchor = target.closest('a')
+  if (anchor && anchor.href) {
+    // Check if it's an external link
+    if (anchor.href.startsWith('http') && !anchor.href.includes(window.location.host)) {
+      const confirmRedirect = window.confirm(`您即將離開本站，前往外部網站：\n${anchor.href}\n\n是否繼續前往？`)
+      if (!confirmRedirect) {
+        event.preventDefault()
+      }
+    }
+  }
+}
 </script>
 
 <template>
@@ -60,7 +74,7 @@ const parsedBody = computed(() => {
         </p>
       </div>
 
-      <div v-if="project.body" class="markdown-content mt-10 max-w-2xl font-mono text-sm leading-relaxed text-muted-foreground" v-html="parsedBody" />
+      <div v-if="project.body" class="markdown-content mt-10 max-w-2xl font-mono text-sm leading-relaxed text-muted-foreground" v-html="parsedBody" @click="handleBodyClick" />
 
       <div v-if="project.gallery && project.gallery.length" class="mt-10">
         <Label>GALLERY</Label>

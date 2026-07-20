@@ -12,6 +12,15 @@ function toggleMenu() {
 function closeMenu() {
   menuOpen.value = false
 }
+
+function handleExternalLink(event: MouseEvent, href: string) {
+  const confirmRedirect = window.confirm(`您即將離開本站，前往外部網站：\n${href}\n\n是否繼續前往？`)
+  if (!confirmRedirect) {
+    event.preventDefault()
+  } else {
+    closeMenu()
+  }
+}
 </script>
 
 <template>
@@ -24,6 +33,7 @@ function closeMenu() {
           :href="link.href"
           target="_blank"
           rel="noopener noreferrer"
+          @click="handleExternalLink($event, link.href)"
         >
           {{ link.label }}
         </a>
@@ -54,7 +64,7 @@ function closeMenu() {
           class="border-t border-border py-3"
           target="_blank"
           rel="noopener noreferrer"
-          @click="closeMenu"
+          @click="handleExternalLink($event, link.href)"
         >
           {{ link.label }}
         </a>

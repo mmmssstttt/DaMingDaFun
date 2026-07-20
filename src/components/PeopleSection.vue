@@ -6,12 +6,10 @@ import content from '@/data/content.json'
 
 const activeDot = ref(0)
 
-function handlePersonLink(event: MouseEvent, link: string) {
-  if (link.startsWith('http')) {
-    const confirmRedirect = window.confirm(`您即將離開本站，前往外部網站：\n${link}\n\n是否繼續前往？`)
-    if (!confirmRedirect) {
-      event.preventDefault()
-    }
+function handleExternalLink(event: MouseEvent, link: string) {
+  const confirmRedirect = window.confirm(`您即將離開本站，前往外部網站：\n${link}\n\n是否繼續前往？`)
+  if (!confirmRedirect) {
+    event.preventDefault()
   }
 }
 </script>
@@ -31,39 +29,72 @@ function handlePersonLink(event: MouseEvent, link: string) {
         :key="person.name"
         :class="person.position"
       >
-        <!-- Image: clickable if link exists -->
-        <component
-          :is="person.link ? 'a' : 'div'"
-          :href="person.link || undefined"
-          :target="person.link?.startsWith('http') ? '_blank' : undefined"
-          :rel="person.link?.startsWith('http') ? 'noopener noreferrer' : undefined"
-          :class="person.link ? 'block cursor-pointer' : 'block'"
-          @click="person.link ? handlePersonLink($event, person.link) : undefined"
-        >
-          <div class="relative aspect-[3/4] overflow-hidden bg-muted">
-            <img
-              :src="person.image"
-              :alt="`${person.name} ${person.role}`"
-              class="size-full object-cover grayscale-[22%] sepia-[11%] contrast-[.92] transition duration-700 hover:scale-[1.03]"
-            />
-            <span class="absolute bottom-2 left-2 bg-background px-1.5 py-1 font-mono text-[10px]">0{{ i + 1 }}</span>
+        <!-- Image area -->
+        <template v-if="person.link && person.link.startsWith('http')">
+          <a
+            :href="person.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block cursor-pointer"
+            @click="handleExternalLink($event, person.link)"
+          >
+            <div class="relative aspect-[3/4] overflow-hidden bg-muted">
+              <img :src="person.image" :alt="`${person.name} ${person.role}`" class="size-full object-cover grayscale-[22%] sepia-[11%] contrast-[.92] transition duration-700 hover:scale-[1.03]" />
+              <span class="absolute bottom-2 left-2 bg-background px-1.5 py-1 font-mono text-[10px]">0{{ i + 1 }}</span>
+            </div>
+          </a>
+        </template>
+        <template v-else-if="person.link">
+          <router-link :to="person.link" class="block cursor-pointer">
+            <div class="relative aspect-[3/4] overflow-hidden bg-muted">
+              <img :src="person.image" :alt="`${person.name} ${person.role}`" class="size-full object-cover grayscale-[22%] sepia-[11%] contrast-[.92] transition duration-700 hover:scale-[1.03]" />
+              <span class="absolute bottom-2 left-2 bg-background px-1.5 py-1 font-mono text-[10px]">0{{ i + 1 }}</span>
+            </div>
+          </router-link>
+        </template>
+        <template v-else>
+          <div class="block">
+            <div class="relative aspect-[3/4] overflow-hidden bg-muted">
+              <img :src="person.image" :alt="`${person.name} ${person.role}`" class="size-full object-cover grayscale-[22%] sepia-[11%] contrast-[.92] transition duration-700 hover:scale-[1.03]" />
+              <span class="absolute bottom-2 left-2 bg-background px-1.5 py-1 font-mono text-[10px]">0{{ i + 1 }}</span>
+            </div>
           </div>
-        </component>
-        <!-- Info row: clickable if link exists -->
-        <component
-          :is="person.link ? 'a' : 'div'"
-          :href="person.link || undefined"
-          :target="person.link?.startsWith('http') ? '_blank' : undefined"
-          :rel="person.link?.startsWith('http') ? 'noopener noreferrer' : undefined"
-          :class="['mt-2 flex justify-between border-t border-foreground pt-2', person.link ? 'cursor-pointer' : '']"
-          @click="person.link ? handlePersonLink($event, person.link) : undefined"
-        >
-          <div>
-            <p class="font-bold tracking-[-.035em]">{{ person.name }}</p>
-            <p class="mt-1 font-mono text-[10px] tracking-[.06em] text-muted-foreground">{{ person.role }}</p>
+        </template>
+
+        <!-- Info row -->
+        <template v-if="person.link && person.link.startsWith('http')">
+          <a
+            :href="person.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-2 flex cursor-pointer justify-between border-t border-foreground pt-2"
+            @click="handleExternalLink($event, person.link)"
+          >
+            <div>
+              <p class="font-bold tracking-[-.035em]">{{ person.name }}</p>
+              <p class="mt-1 font-mono text-[10px] tracking-[.06em] text-muted-foreground">{{ person.role }}</p>
+            </div>
+            <ArrowUpRight :size="16" :stroke-width="1.3" />
+          </a>
+        </template>
+        <template v-else-if="person.link">
+          <router-link :to="person.link" class="mt-2 flex cursor-pointer justify-between border-t border-foreground pt-2">
+            <div>
+              <p class="font-bold tracking-[-.035em]">{{ person.name }}</p>
+              <p class="mt-1 font-mono text-[10px] tracking-[.06em] text-muted-foreground">{{ person.role }}</p>
+            </div>
+            <ArrowUpRight :size="16" :stroke-width="1.3" />
+          </router-link>
+        </template>
+        <template v-else>
+          <div class="mt-2 flex justify-between border-t border-foreground pt-2">
+            <div>
+              <p class="font-bold tracking-[-.035em]">{{ person.name }}</p>
+              <p class="mt-1 font-mono text-[10px] tracking-[.06em] text-muted-foreground">{{ person.role }}</p>
+            </div>
+            <ArrowUpRight :size="16" :stroke-width="1.3" />
           </div>
-          <ArrowUpRight :size="16" :stroke-width="1.3" />
-        </component>
+        </template>
       </article>
     </div>
     <div class="mt-14 flex justify-center gap-2 md:mt-20">

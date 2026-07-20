@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Background3D from './components/Background3D.vue'
+import ScrollToTop from './components/ScrollToTop.vue'
 </script>
 
 <template>
@@ -8,5 +9,6 @@ import Background3D from './components/Background3D.vue'
     <main class="relative z-10 min-h-screen bg-background font-[Noto_Sans_TC] text-foreground">
       <router-view />
     </main>
+    <ScrollToTop />
   </div>
 </template>

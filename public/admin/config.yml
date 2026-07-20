@@ -45,11 +45,13 @@ collections:
             name: "people"
             widget: "list"
             fields:
+              - { label: "ID (英文代號)", name: "id", widget: "string", hint: "用於個人頁面網址，例如 sho、eleanor、alvin。" }
               - { label: "Name", name: "name", widget: "string" }
               - { label: "Role", name: "role", widget: "string" }
               - { label: "Photo", name: "image", widget: "image" }
               - { label: "Grid Position", name: "position", widget: "string" }
-              - { label: "Personal Link (URL or /path)", name: "link", widget: "string", required: false, hint: "留空則不可點擊。填入內部路徑（如 /case/01）或外部網址（如 https://...）。" }
+              - { label: "Personal Link (URL or /path)", name: "link", widget: "string", required: false, hint: "留空則不可點擊。填入 /member/代號 連至個人頁，或外部網址（如 https://...）。" }
+              - { label: "Bio (個人簡介)", name: "bio", widget: "markdown", required: false, hint: "支援 Markdown 格式，將顯示於個人子頁面。" }
           - label: "Projects"
             name: "projects"
             widget: "list"

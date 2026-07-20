@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { Menu, X } from 'lucide-vue-next'
 import content from '@/data/content.json'
 
+const route = useRoute()
+const router = useRouter()
 const menuOpen = ref(false)
 
 function toggleMenu() {
@@ -20,6 +23,22 @@ function handleExternalLink(event: MouseEvent, href: string) {
   } else {
     closeMenu()
   }
+}
+
+function handleAnchorClick(event: MouseEvent, href: string) {
+  closeMenu()
+  // If already on home page, manually scroll to the element
+  if (route.path === '/') {
+    event.preventDefault()
+    const el = document.querySelector(href)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+    // Update the hash in the URL without triggering navigation
+    router.replace({ path: '/', hash: href })
+  }
+  // If on another page, router-link will navigate to { path: '/', hash: href }
+  // and scrollBehavior will handle smooth scrolling
 }
 </script>
 
@@ -40,6 +59,7 @@ function handleExternalLink(event: MouseEvent, href: string) {
         <router-link
           v-else
           :to="link.href.startsWith('#') ? { path: '/', hash: link.href } : link.href"
+          @click="link.href.startsWith('#') ? handleAnchorClick($event, link.href) : undefined"
         >
           {{ link.label }}
         </router-link>
@@ -72,7 +92,7 @@ function handleExternalLink(event: MouseEvent, href: string) {
           v-else
           :to="link.href.startsWith('#') ? { path: '/', hash: link.href } : link.href"
           class="border-t border-border py-3"
-          @click="closeMenu"
+          @click="link.href.startsWith('#') ? handleAnchorClick($event, link.href) : closeMenu()"
         >
           {{ link.label }}
         </router-link>

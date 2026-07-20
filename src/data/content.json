@@ -31,25 +31,31 @@
   ],
   "people": [
     {
+      "id": "sho",
       "name": "江明倢 Sho",
       "role": "商業接洽　概念設計",
       "image": "/DaMingDaFun/images/S__58228797.jpg",
       "position": "md:col-span-3 md:col-start-1 md:mt-28",
-      "link": ""
+      "link": "/member/sho",
+      "bio": ""
     },
     {
+      "id": "eleanor",
       "name": "陳子璇 Eleanor",
       "role": "專案管理　邏輯分析",
       "image": "/DaMingDaFun/images/S__58458130.jpg",
       "position": "md:col-span-3 md:col-start-5",
-      "link": ""
+      "link": "/member/eleanor",
+      "bio": ""
     },
     {
+      "id": "alvin",
       "name": "蔡孟軒 Alvin",
       "role": "工程實作　產品打樣",
       "image": "/DaMingDaFun/images/messageImage_1784444420109.jpg",
       "position": "md:col-span-3 md:col-start-9 md:mt-44",
-      "link": ""
+      "link": "/member/alvin",
+      "bio": ""
     }
   ],
   "projects": [

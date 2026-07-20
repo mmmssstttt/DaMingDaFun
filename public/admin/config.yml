@@ -49,6 +49,7 @@ collections:
               - { label: "Role", name: "role", widget: "string" }
               - { label: "Photo", name: "image", widget: "image" }
               - { label: "Grid Position", name: "position", widget: "string" }
+              - { label: "Link (URL or #anchor)", name: "link", widget: "string", required: false, hint: "Enter an anchor (e.g. #projects) or full URL (e.g. https://instagram.com/...)" }
           - label: "Projects"
             name: "projects"
             widget: "list"

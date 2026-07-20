@@ -6,10 +6,12 @@ import content from '@/data/content.json'
 
 const activeDot = ref(0)
 
-function handleExternalLink(event: MouseEvent, href: string) {
-  const confirmRedirect = window.confirm(`您即將離開本站，前往外部網站：\n${href}\n\n是否繼續前往？`)
-  if (!confirmRedirect) {
-    event.preventDefault()
+function handlePersonLink(event: MouseEvent, link: string) {
+  if (link.startsWith('http')) {
+    const confirmRedirect = window.confirm(`您即將離開本站，前往外部網站：\n${link}\n\n是否繼續前往？`)
+    if (!confirmRedirect) {
+      event.preventDefault()
+    }
   }
 }
 </script>
@@ -29,54 +31,15 @@ function handleExternalLink(event: MouseEvent, href: string) {
         :key="person.name"
         :class="person.position"
       >
-        <template v-if="person.link">
-          <a
-            v-if="person.link.startsWith('http')"
-            :href="person.link"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group block cursor-pointer"
-            @click="handleExternalLink($event, person.link)"
-          >
-            <div class="relative aspect-[3/4] overflow-hidden bg-muted">
-              <img
-                :src="person.image"
-                :alt="`${person.name} ${person.role}`"
-                class="size-full object-cover grayscale-[22%] sepia-[11%] contrast-[.92] transition duration-700 group-hover:scale-[1.03]"
-              />
-              <span class="absolute bottom-2 left-2 bg-background px-1.5 py-1 font-mono text-[10px]">0{{ i + 1 }}</span>
-            </div>
-            <div class="mt-2 flex justify-between border-t border-foreground pt-2">
-              <div>
-                <p class="font-bold tracking-[-.035em]">{{ person.name }}</p>
-                <p class="mt-1 font-mono text-[10px] tracking-[.06em] text-muted-foreground">{{ person.role }}</p>
-              </div>
-              <ArrowUpRight :size="16" :stroke-width="1.3" class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </div>
-          </a>
-          <router-link
-            v-else
-            :to="person.link.startsWith('#') ? { path: '/', hash: person.link } : person.link"
-            class="group block cursor-pointer"
-          >
-            <div class="relative aspect-[3/4] overflow-hidden bg-muted">
-              <img
-                :src="person.image"
-                :alt="`${person.name} ${person.role}`"
-                class="size-full object-cover grayscale-[22%] sepia-[11%] contrast-[.92] transition duration-700 group-hover:scale-[1.03]"
-              />
-              <span class="absolute bottom-2 left-2 bg-background px-1.5 py-1 font-mono text-[10px]">0{{ i + 1 }}</span>
-            </div>
-            <div class="mt-2 flex justify-between border-t border-foreground pt-2">
-              <div>
-                <p class="font-bold tracking-[-.035em]">{{ person.name }}</p>
-                <p class="mt-1 font-mono text-[10px] tracking-[.06em] text-muted-foreground">{{ person.role }}</p>
-              </div>
-              <ArrowUpRight :size="16" :stroke-width="1.3" class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </div>
-          </router-link>
-        </template>
-        <template v-else>
+        <!-- Image: clickable if link exists -->
+        <component
+          :is="person.link ? 'a' : 'div'"
+          :href="person.link || undefined"
+          :target="person.link?.startsWith('http') ? '_blank' : undefined"
+          :rel="person.link?.startsWith('http') ? 'noopener noreferrer' : undefined"
+          :class="person.link ? 'block cursor-pointer' : 'block'"
+          @click="person.link ? handlePersonLink($event, person.link) : undefined"
+        >
           <div class="relative aspect-[3/4] overflow-hidden bg-muted">
             <img
               :src="person.image"
@@ -85,14 +48,22 @@ function handleExternalLink(event: MouseEvent, href: string) {
             />
             <span class="absolute bottom-2 left-2 bg-background px-1.5 py-1 font-mono text-[10px]">0{{ i + 1 }}</span>
           </div>
-          <div class="mt-2 flex justify-between border-t border-foreground pt-2">
-            <div>
-              <p class="font-bold tracking-[-.035em]">{{ person.name }}</p>
-              <p class="mt-1 font-mono text-[10px] tracking-[.06em] text-muted-foreground">{{ person.role }}</p>
-            </div>
-            <ArrowUpRight :size="16" :stroke-width="1.3" />
+        </component>
+        <!-- Info row: clickable if link exists -->
+        <component
+          :is="person.link ? 'a' : 'div'"
+          :href="person.link || undefined"
+          :target="person.link?.startsWith('http') ? '_blank' : undefined"
+          :rel="person.link?.startsWith('http') ? 'noopener noreferrer' : undefined"
+          :class="['mt-2 flex justify-between border-t border-foreground pt-2', person.link ? 'cursor-pointer' : '']"
+          @click="person.link ? handlePersonLink($event, person.link) : undefined"
+        >
+          <div>
+            <p class="font-bold tracking-[-.035em]">{{ person.name }}</p>
+            <p class="mt-1 font-mono text-[10px] tracking-[.06em] text-muted-foreground">{{ person.role }}</p>
           </div>
-        </template>
+          <ArrowUpRight :size="16" :stroke-width="1.3" />
+        </component>
       </article>
     </div>
     <div class="mt-14 flex justify-center gap-2 md:mt-20">

@@ -49,7 +49,7 @@ collections:
               - { label: "Role", name: "role", widget: "string" }
               - { label: "Photo", name: "image", widget: "image" }
               - { label: "Grid Position", name: "position", widget: "string" }
-              - { label: "Link (URL or #anchor)", name: "link", widget: "string", required: false, hint: "Enter an anchor (e.g. #projects) or full URL (e.g. https://instagram.com/...)" }
+              - { label: "Personal Link (URL or /path)", name: "link", widget: "string", required: false, hint: "留空則不可點擊。填入內部路徑（如 /case/01）或外部網址（如 https://...）。" }
           - label: "Projects"
             name: "projects"
             widget: "list"

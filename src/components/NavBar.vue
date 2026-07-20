@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { Menu, X } from 'lucide-vue-next'
 import content from '@/data/content.json'
 
-const route = useRoute()
 const router = useRouter()
 const menuOpen = ref(false)
 
@@ -25,20 +24,31 @@ function handleExternalLink(event: MouseEvent, href: string) {
   }
 }
 
-function handleAnchorClick(event: MouseEvent, href: string) {
+/**
+ * Smooth-scroll to a section anchor (#id).
+ * Fully bypasses Vue Router — no scrollBehavior conflict.
+ */
+function handleAnchorClick(event: MouseEvent, hash: string) {
+  event.preventDefault()
   closeMenu()
-  // If already on home page, manually scroll to the element
-  if (route.path === '/') {
-    event.preventDefault()
-    const el = document.querySelector(href)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' })
-    }
-    // Update the hash in the URL without triggering navigation
-    router.replace({ path: '/', hash: href })
+
+  const scrollToHash = () => {
+    const el = document.querySelector(hash)
+    if (!el) return
+    const top = el.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top, behavior: 'smooth' })
   }
-  // If on another page, router-link will navigate to { path: '/', hash: href }
-  // and scrollBehavior will handle smooth scrolling
+
+  // If not on home page, navigate first, then scroll after render
+  const currentPath = router.currentRoute.value.path
+  if (currentPath !== '/') {
+    router.push('/').then(() => {
+      // Wait for next tick so the DOM is ready
+      requestAnimationFrame(scrollToHash)
+    })
+  } else {
+    scrollToHash()
+  }
 }
 </script>
 
@@ -56,11 +66,14 @@ function handleAnchorClick(event: MouseEvent, href: string) {
         >
           {{ link.label }}
         </a>
-        <router-link
-          v-else
-          :to="link.href.startsWith('#') ? { path: '/', hash: link.href } : link.href"
-          @click="link.href.startsWith('#') ? handleAnchorClick($event, link.href) : undefined"
+        <a
+          v-else-if="link.href.startsWith('#')"
+          :href="link.href"
+          @click="handleAnchorClick($event, link.href)"
         >
+          {{ link.label }}
+        </a>
+        <router-link v-else :to="link.href">
           {{ link.label }}
         </router-link>
       </template>
@@ -88,12 +101,15 @@ function handleAnchorClick(event: MouseEvent, href: string) {
         >
           {{ link.label }}
         </a>
-        <router-link
-          v-else
-          :to="link.href.startsWith('#') ? { path: '/', hash: link.href } : link.href"
+        <a
+          v-else-if="link.href.startsWith('#')"
+          :href="link.href"
           class="border-t border-border py-3"
-          @click="link.href.startsWith('#') ? handleAnchorClick($event, link.href) : closeMenu()"
+          @click="handleAnchorClick($event, link.href)"
         >
+          {{ link.label }}
+        </a>
+        <router-link v-else :to="link.href" class="border-t border-border py-3" @click="closeMenu">
           {{ link.label }}
         </router-link>
       </template>

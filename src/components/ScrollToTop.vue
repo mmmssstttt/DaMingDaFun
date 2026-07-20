@@ -28,10 +28,10 @@ onUnmounted(() => {
     <button
       v-if="visible"
       aria-label="回到頂端"
-      class="fixed bottom-6 right-6 z-50 grid size-10 place-items-center border border-border bg-background/80 backdrop-blur-sm transition-colors duration-200 hover:bg-foreground hover:text-background"
+      class="fixed right-4 top-20 z-50 grid size-9 place-items-center rounded-full border border-border bg-background/80 backdrop-blur-sm transition-colors duration-200 hover:bg-foreground hover:text-background"
       @click="scrollToTop"
     >
-      <ArrowUp :size="16" :stroke-width="1.5" />
+      <ArrowUp :size="15" :stroke-width="1.5" />
     </button>
   </Transition>
 </template>
@@ -39,14 +39,14 @@ onUnmounted(() => {
 <style scoped>
 .fade-up-enter-active,
 .fade-up-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 .fade-up-enter-from {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(-8px);
 }
 .fade-up-leave-to {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(-8px);
 }
 </style>

@@ -1,2 +1,2 @@
 @import 'tailwindcss' source(none);
-@source '../**/*.{js,ts,vue}';
+@source '../**/*.{js,ts,vue,json}';

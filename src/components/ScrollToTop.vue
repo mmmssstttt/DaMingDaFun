@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ArrowUp } from 'lucide-vue-next'
+import { smoothScrollTo } from '@/utils/scroll'
 
 const visible = ref(false)
 const THRESHOLD = 400
@@ -10,7 +11,7 @@ function checkScroll() {
 }
 
 function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  smoothScrollTo(0, 400) // 0.4 seconds smooth animation
 }
 
 onMounted(() => {

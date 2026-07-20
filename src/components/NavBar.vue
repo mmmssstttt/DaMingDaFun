@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Menu, X } from 'lucide-vue-next'
+import { smoothScrollTo } from '@/utils/scroll'
 import content from '@/data/content.json'
 
 const router = useRouter()
@@ -36,7 +37,7 @@ function handleAnchorClick(event: MouseEvent, hash: string) {
     const el = document.querySelector(hash)
     if (!el) return
     const top = el.getBoundingClientRect().top + window.scrollY
-    window.scrollTo({ top, behavior: 'smooth' })
+    smoothScrollTo(top, 400) // 0.4 seconds smooth animation
   }
 
   // If not on home page, navigate first, then scroll after render

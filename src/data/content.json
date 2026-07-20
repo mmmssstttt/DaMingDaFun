@@ -23,6 +23,10 @@
     {
       "href": "#contact",
       "label": "聯絡 CONTACT"
+    },
+    {
+      "href": "https://www.google.com/",
+      "label": "GOO"
     }
   ],
   "people": [
